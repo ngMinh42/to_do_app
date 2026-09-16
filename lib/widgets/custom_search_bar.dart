@@ -6,7 +6,9 @@ import '../common/app_assets.dart';
 import '../common/app_color.dart';
 
 class CustomSearchBar extends StatefulWidget {
-  const CustomSearchBar({super.key});
+  final ValueChanged<String>? onSearch;
+  const CustomSearchBar({super.key, this.onSearch});
+
   @override
   State<CustomSearchBar> createState() => _SearchBarState();
 }
@@ -29,6 +31,9 @@ class _SearchBarState extends State<CustomSearchBar> {
         ? TextField(
             controller: controller,
             focusNode: focusNode,
+            onChanged: (value) {
+              widget.onSearch?.call(value);
+            },
             autofocus: true,
             onTapOutside: (event) {
               focusNode.unfocus();

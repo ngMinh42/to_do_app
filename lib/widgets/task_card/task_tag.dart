@@ -6,6 +6,9 @@ class TaskTag extends StatelessWidget {
   const TaskTag({super.key, required this.content});
   @override
   Widget build(BuildContext context) {
+    if (content.trim().isEmpty) {
+      return const SizedBox.shrink();
+    }
     return Container(
       padding: EdgeInsets.fromLTRB(16, 6, 16, 6),
       decoration: BoxDecoration(
@@ -20,6 +23,7 @@ class TaskTag extends StatelessWidget {
           fontWeight: FontWeight.w500,
           fontSize: 13,
           color: AppColor.black,
+          decoration: TextDecoration.none,
         ),
       ),
     );

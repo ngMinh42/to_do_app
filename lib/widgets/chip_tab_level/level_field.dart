@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/common/app_color.dart';
 
-import '../models/task_level.dart';
 import 'tab_chip.dart';
 
 class LevelField extends StatefulWidget {
-  final ValueChanged<TaskLevel>? onChanged;
-  const LevelField({super.key, this.onChanged});
+  final String initialLevel;
+  final ValueChanged<String>? onChanged;
+  const LevelField({super.key, this.onChanged, this.initialLevel = 'Urgent'});
 
   @override
   State<LevelField> createState() => _LevelFieldState();
 }
 
 class _LevelFieldState extends State<LevelField> {
-  double selectedLevel = 1.0;
+  final List<String> levels = ['Urgent', 'Basic', 'Important'];
+  late String selectedLevel = 'Urgent';
+
+  @override
+  void initState() {
+    super.initState();
+    selectedLevel = widget.initialLevel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +31,15 @@ class _LevelFieldState extends State<LevelField> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: TaskLevel.levels.map((level) {
+        children: levels.map((level) {
           return Padding(
             padding: const EdgeInsets.only(right: 12),
             child: TabChip(
-              title: level.title,
-              isFocused: selectedLevel == level.value,
+              title: level,
+              isFocused: selectedLevel == level,
               onTap: () {
                 setState(() {
-                  selectedLevel = level.value;
+                  selectedLevel = level;
                 });
                 widget.onChanged?.call(level);
               },

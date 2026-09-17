@@ -3,7 +3,9 @@ import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
 
 class AddTaskButton extends StatelessWidget {
-  const AddTaskButton({super.key});
+  final VoidCallback onPressed;
+  const AddTaskButton({super.key, required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -11,7 +13,7 @@ class AddTaskButton extends StatelessWidget {
         padding: WidgetStateProperty.all(EdgeInsets.fromLTRB(24, 15, 28, 16)),
         backgroundColor: WidgetStatePropertyAll(AppColor.black),
       ),
-      onPressed: null,
+      onPressed: onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

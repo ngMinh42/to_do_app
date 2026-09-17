@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/common/app_color.dart';
-import 'package:to_do_app/widgets/color_circle.dart';
+import 'package:to_do_app/widgets/choose_color/color_circle.dart';
 
 class ColorField extends StatefulWidget {
+  final Color initialColor;
+
   final ValueChanged<Color>? onChanged;
-  const ColorField({super.key, this.onChanged});
+  const ColorField({
+    super.key,
+    this.onChanged,
+    this.initialColor = AppColor.yellow,
+  });
   @override
   State<ColorField> createState() => _ColorFieldState();
 }
@@ -20,7 +26,13 @@ class _ColorFieldState extends State<ColorField> {
     AppColor.bluePurple,
     AppColor.purple,
   ];
-  Color selectedColor = AppColor.yellow;
+  late Color selectedColor = AppColor.yellow;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedColor = widget.initialColor;
+  }
 
   @override
   Widget build(BuildContext context) {

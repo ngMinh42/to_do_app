@@ -11,4 +11,5 @@ class AppAssets {
   static const String searchSvg = 'assets/svg/search.svg';
   static const String calendar = 'assets/svg/calendar_icon.svg';
   static const String clock = 'assets/svg/clock_icon.svg';
+  static const String edit = 'assets/svg/edit_icon.svg';
 }

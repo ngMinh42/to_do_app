@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:to_do_app/widgets/custom_text_field.dart';
+import 'package:to_do_app/widgets/text_field/custom_text_field.dart';
 
-import '../common/app_assets.dart';
-import '../common/app_color.dart';
+import '../../common/app_assets.dart';
+import '../../common/app_color.dart';
 
 class CustomSearchBar extends StatefulWidget {
   final ValueChanged<String>? onSearch;

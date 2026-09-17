@@ -13,22 +13,40 @@ import 'package:to_do_app/models/task.dart';
 import '../utils/task_utils.dart';
 import '../widgets/buttons/save_task_button.dart';
 
-class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key});
+class EditTaskScreen extends StatefulWidget {
+  final Task task;
+  const EditTaskScreen({super.key, required this.task});
   @override
-  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  State<EditTaskScreen> createState() => _EditTaskScreenState();
 }
 
-class _CreateTaskScreenState extends State<CreateTaskScreen> {
+class _EditTaskScreenState extends State<EditTaskScreen> {
   final titleController = TextEditingController();
   final timeController = TextEditingController();
   final placeController = TextEditingController();
   Color selectedColor = AppColor.yellow;
   String selectedLevel = 'Urgent';
   DateTime? selectedTime;
+
   @override
   void initState() {
     super.initState();
+    titleController.text = widget.task.title;
+    placeController.text = widget.task.place ?? '';
+    selectedLevel = widget.task.level;
+    selectedTime = widget.task.dueAt;
+    selectedColor = widget.task.color ?? AppColor.yellow;
+    // Hien thi due time cu
+    if (selectedTime != null) {
+      timeController.text =
+          '${selectedTime!.hour.toString().padLeft(2, '0')}:'
+          '${selectedTime!.minute.toString().padLeft(2, '0')}';
+    }
+
+    // Lay mau cu
+    if (widget.task.color != null) {
+      selectedColor = widget.task.color!;
+    }
   }
 
   @override
@@ -37,6 +55,23 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     timeController.dispose();
     placeController.dispose();
     super.dispose();
+  }
+
+  Future<void> updateTask() async {
+    final updatedTask = Task(
+      id: widget.task.id,
+      title: titleController.text.trim(),
+      color: selectedColor,
+      dueAt: selectedTime,
+      place: placeController.text.trim(),
+      level: selectedLevel,
+      status: widget.task.status,
+    );
+
+    await DatabaseHelper.instance.updateTask(
+      updatedTask.id!,
+      updatedTask.toMap(),
+    );
   }
 
   @override
@@ -59,6 +94,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 SizedBox(height: 22),
                 Text('Color', style: AppTextStyle.textFieldName()),
                 ColorField(
+                  initialColor: selectedColor,
                   onChanged: (color) {
                     selectedColor = color;
                   },
@@ -82,6 +118,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 Text('Level', style: AppTextStyle.textFieldName()),
                 SizedBox(height: 16),
                 LevelField(
+                  initialLevel: selectedLevel,
                   onChanged: (level) {
                     selectedLevel = level;
                   },
@@ -104,16 +141,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     );
                     return;
                   }
-                  await saveTask(
-                    title: titleController.text.trim(),
-                    color: selectedColor,
-                    dueAt: selectedTime,
-                    place: placeController.text.trim(),
-                    level: selectedLevel,
-                    status: 0,
-                  );
+                  await updateTask();
                   if (!mounted) return;
-                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 },
               ),
             ),

@@ -26,11 +26,21 @@ class AppTextStyle {
     );
   }
 
+  //detail phan editing
   static TextStyle taskDetail() {
     return TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w500,
       color: AppColor.black,
+    );
+  }
+
+  static TextStyle taskCardDetail() {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      color: AppColor.black,
+      fontSize: 12,
+      decoration: TextDecoration.none,
     );
   }
 }

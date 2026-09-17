@@ -3,6 +3,7 @@ import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
 import 'package:to_do_app/common/app_text_style.dart';
 import 'package:to_do_app/data/database_helper.dart';
+import 'package:to_do_app/models/task_level.dart';
 import 'package:to_do_app/widgets/color_field.dart';
 import 'package:to_do_app/widgets/custom_app_bar.dart';
 import 'package:to_do_app/widgets/custom_text_field.dart';
@@ -10,6 +11,7 @@ import 'package:to_do_app/widgets/due_time_field.dart';
 import 'package:to_do_app/widgets/level_field.dart';
 import 'package:to_do_app/models/task.dart';
 
+import '../models/task_level.dart';
 import '../utils/task_utils.dart';
 import '../widgets/save_task_button.dart';
 
@@ -24,7 +26,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   final timeController = TextEditingController();
   final placeController = TextEditingController();
   Color selectedColor = AppColor.yellow;
-  double selectedLevel = 1;
+  TaskLevel selectedLevel = TaskLevel.levels[0];
   DateTime? selectedTime;
 
   @override

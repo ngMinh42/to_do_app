@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/models/task_level.dart';
 
 class Task {
   final String title;
   final Color? color;
   final DateTime? dueAt;
   final String? place;
-  final double level;
+  final TaskLevel level;
   final double status;
   final int? id;
 
@@ -26,7 +27,7 @@ class Task {
       'color': color?.toARGB32(),
       'dueAt': dueAt?.toIso8601String(),
       'place': place,
-      'level': level,
+      'level': level.value,
       'status': status,
     };
   }
@@ -38,7 +39,9 @@ class Task {
       color: map['color'] != null ? Color(map['color']) : null,
       dueAt: map['dueAt'] != null ? DateTime.parse(map['dueAt']) : null,
       place: map['place'],
-      level: map['level'],
+      level: TaskLevel.levels.firstWhere(
+        (level) => level.value == (map['level'] as num).toDouble(),
+      ),
       status: map['status'],
     );
   }

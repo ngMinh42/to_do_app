@@ -9,4 +9,6 @@ class AppAssets {
   static const String place = 'assets/images/place_icon.png';
   static const String search = 'assets/images/search_icon.png';
   static const String searchSvg = 'assets/svg/search.svg';
+  static const String calendar = 'assets/svg/calendar_icon.svg';
+  static const String clock = 'assets/svg/clock_icon.svg';
 }

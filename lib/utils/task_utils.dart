@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/data/database_helper.dart';
 import 'package:to_do_app/models/task.dart';
+import 'package:to_do_app/models/task_level.dart';
 
 import 'task_status.dart';
 
@@ -9,7 +10,7 @@ Future<void> saveTask({
   required Color color,
   required DateTime? dueAt,
   required String? place,
-  required double level,
+  required TaskLevel level,
   required double status,
 }) async {
   final task = Task(

@@ -1,17 +1,7 @@
-# to_do_app
+### Task Manager Screen
 
-A new Flutter project.
+<img width="434" height="878" alt="Ảnh màn hình 2026-09-21 lúc 17 15 40" src="https://github.com/user-attachments/assets/4f326055-526f-4648-b10a-114c90e27c08" />
 
-## Getting Started
+### Create Task Screen
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="427" height="881" alt="Task Manager Screen" src="https://github.com/user-attachments/assets/567d41cf-081a-4b0f-be7f-b2e9d0f84a79" />

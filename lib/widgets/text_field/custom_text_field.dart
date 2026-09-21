@@ -9,7 +9,6 @@ class CustomTextField extends StatelessWidget {
   final TextStyle? style;
   final bool readOnly;
   final VoidCallback? onTap;
-
   const CustomTextField({
     super.key,
     required this.controller,

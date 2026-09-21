@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../common/app_text_style.dart';
 import 'custom_text_field.dart';
 
 class DueTimeField extends StatefulWidget {
@@ -10,7 +8,6 @@ class DueTimeField extends StatefulWidget {
   final String? hintText;
   final Widget? suffixIcon;
   final TextStyle? style;
-
   const DueTimeField({
     super.key,
     required this.controller,
@@ -42,7 +39,6 @@ class _DueTimeFieldState extends State<DueTimeField> {
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
-
     if (date == null) return;
     final time = await showTimePicker(
       context: context,

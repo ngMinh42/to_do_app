@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/common/app_color.dart';
-
 import 'tab_chip.dart';
 
 class LevelField extends StatefulWidget {

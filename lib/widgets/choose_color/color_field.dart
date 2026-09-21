@@ -4,13 +4,13 @@ import 'package:to_do_app/widgets/choose_color/color_circle.dart';
 
 class ColorField extends StatefulWidget {
   final Color initialColor;
-
   final ValueChanged<Color>? onChanged;
   const ColorField({
     super.key,
     this.onChanged,
     this.initialColor = AppColor.yellow,
   });
+  
   @override
   State<ColorField> createState() => _ColorFieldState();
 }

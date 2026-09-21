@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/common/app_color.dart';
 import 'package:to_do_app/utils/task_status.dart';
-
 import 'tab_chip.dart';
 
 class TabField extends StatefulWidget {
@@ -22,7 +20,6 @@ class _TabFieldState extends State<TabField> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(bottom: 7),
-
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: TaskStatus.values.map((status) {

@@ -1,32 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
-
-import '../warning/warning.dart';
+import '../../utils/dialog_utils.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isEdit;
   final VoidCallback? onDelete;
   const CustomAppBar({super.key, this.isEdit = false, this.onDelete});
-  void _showWarning(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Warning(
-          title: 'Discard task?',
-          descrisption: 'Your task will not be saved.',
-          agree: 'Discard',
-          onCancel: () {
-            Navigator.pop(context);
-          },
-          onAgree: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-        );
-      },
-    );
+  Future<void> _showWarning(BuildContext context) async {
+    final shouldDiscard = await showDiscardDialog(context);
+    if (shouldDiscard && context.mounted) {
+      Navigator.pop(context);
+    }
   }
 
   @override

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import '../../common/app_color.dart';
 
 class ColorCircle extends StatelessWidget {
   final bool isFocused;
   final Color color;
   final VoidCallback? onTap;
-
   const ColorCircle({
     super.key,
     required this.isFocused,

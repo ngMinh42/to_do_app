@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:to_do_app/common/app_color.dart';
 import 'package:to_do_app/widgets/warning/custom_button.dart';
 
@@ -17,6 +16,7 @@ class Warning extends StatelessWidget {
     this.onAgree,
     this.onCancel,
   });
+  
   @override
   Widget build(BuildContext content) {
     return Align(

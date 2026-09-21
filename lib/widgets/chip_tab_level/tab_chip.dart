@@ -5,7 +5,6 @@ class TabChip extends StatelessWidget {
   final String title;
   final bool isFocused;
   final VoidCallback onTap;
-
   const TabChip({
     super.key,
     required this.title,

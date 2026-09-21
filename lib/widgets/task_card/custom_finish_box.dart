@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../warning/warning.dart';
 import '/common/app_color.dart';
 
@@ -13,6 +12,7 @@ class CustomFinishBox extends StatelessWidget {
     required this.onChanged,
     this.size = 23,
   });
+  
   void _showCompleteWarning(BuildContext context) {
     showDialog(
       context: context,

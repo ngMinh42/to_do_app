@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
 
 class SaveTaskButton extends StatelessWidget {

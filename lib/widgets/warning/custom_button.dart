@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../common/app_color.dart';
 
 class CustomButton extends StatelessWidget {
@@ -7,7 +6,6 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onTap;
   final Color borderColor;
   final Color textColor;
-
   const CustomButton({
     super.key,
     required this.text,

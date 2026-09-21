@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
 import 'package:to_do_app/presentations/create_task_screen.dart';
 import 'package:to_do_app/widgets/buttons/add_task_button.dart';
-import 'package:to_do_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:to_do_app/widgets/text_field/custom_search_bar.dart';
 import 'package:to_do_app/widgets/app_bar/home_app_bar.dart';
 import 'package:to_do_app/widgets/chip_tab_level/tab_field.dart';
-
 import '../data/database_helper.dart';
 import '../models/task.dart';
 import '../utils/search_utils.dart';
@@ -23,12 +20,9 @@ class TaskManagerScreen extends StatefulWidget {
 class _TaskManagerState extends State<TaskManagerScreen> {
   List<Task> tasks = [];
   TaskStatus selectedStatus = TaskStatus.today;
-
   String searchKeyword = '';
-
   List<Task> get filteredTasks {
     final searchedTasks = searchTasks(tasks: tasks, keyword: searchKeyword);
-
     return searchedTasks.where((task) {
       return getTaskStatus(dueAt: task.dueAt, status: task.status) ==
           selectedStatus;
@@ -37,7 +31,6 @@ class _TaskManagerState extends State<TaskManagerScreen> {
 
   Future<void> loadTasks() async {
     final data = await DatabaseHelper.instance.getTasks();
-
     setState(() {
       tasks = data.map((map) => Task.fromMap(map)).toList();
     });
@@ -78,15 +71,18 @@ class _TaskManagerState extends State<TaskManagerScreen> {
                 ),
                 SizedBox(height: 25),
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: filteredTasks.length,
-                    itemBuilder: (context, index) {
-                      final task = filteredTasks[index];
-                      return TaskCard(task: task, onTaskUpdate: loadTasks);
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(height: 23);
-                    },
+                  child: RefreshIndicator(
+                    onRefresh: loadTasks,
+                    child: ListView.separated(
+                      itemCount: filteredTasks.length,
+                      itemBuilder: (context, index) {
+                        final task = filteredTasks[index];
+                        return TaskCard(task: task, onTaskUpdate: loadTasks);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 23);
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -105,7 +101,6 @@ class _TaskManagerState extends State<TaskManagerScreen> {
                       builder: (context) => const CreateTaskScreen(),
                     ),
                   );
-
                   await loadTasks();
                 },
               ),

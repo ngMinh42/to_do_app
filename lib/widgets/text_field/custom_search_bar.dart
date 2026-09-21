@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:to_do_app/widgets/text_field/custom_text_field.dart';
-
 import '../../common/app_assets.dart';
 import '../../common/app_color.dart';
 
 class CustomSearchBar extends StatefulWidget {
   final ValueChanged<String>? onSearch;
   const CustomSearchBar({super.key, this.onSearch});
-
   @override
   State<CustomSearchBar> createState() => _SearchBarState();
 }
@@ -92,7 +89,6 @@ class _SearchBarState extends State<CustomSearchBar> {
                   ),
                 ],
               ),
-
               IconButton(
                 onPressed: () {
                   setState(() {

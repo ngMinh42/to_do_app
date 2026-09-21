@@ -8,7 +8,6 @@ class Task {
   final String level;
   final double status;
   final int? id;
-
   const Task({
     required this.title,
     this.color,

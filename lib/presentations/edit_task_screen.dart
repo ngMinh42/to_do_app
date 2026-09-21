@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
 import 'package:to_do_app/common/app_text_style.dart';
-import 'package:to_do_app/data/database_helper.dart';
 import 'package:to_do_app/widgets/choose_color/color_field.dart';
 import 'package:to_do_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:to_do_app/widgets/text_field/custom_text_field.dart';
 import 'package:to_do_app/widgets/text_field/due_time_field.dart';
 import 'package:to_do_app/widgets/chip_tab_level/level_field.dart';
 import 'package:to_do_app/models/task.dart';
-
+import '../utils/dialog_utils.dart';
 import '../utils/task_utils.dart';
 import '../widgets/buttons/save_task_button.dart';
-import '../widgets/warning/warning.dart';
+import '../widgets/warning/blank_warning.dart';
 
 class EditTaskScreen extends StatefulWidget {
   final Task task;
   const EditTaskScreen({super.key, required this.task});
+
   @override
   State<EditTaskScreen> createState() => _EditTaskScreenState();
 }
@@ -43,7 +43,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           '${selectedTime!.hour.toString().padLeft(2, '0')}:'
           '${selectedTime!.minute.toString().padLeft(2, '0')}';
     }
-
     // Lay mau cu
     if (widget.task.color != null) {
       selectedColor = widget.task.color!;
@@ -58,55 +57,17 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     super.dispose();
   }
 
-  Future<void> updateTask() async {
-    final updatedTask = Task(
-      id: widget.task.id,
-      title: titleController.text.trim(),
-      color: selectedColor,
-      dueAt: selectedTime,
-      place: placeController.text.trim(),
-      level: selectedLevel,
-      status: widget.task.status,
-    );
-
-    await DatabaseHelper.instance.updateTask(
-      updatedTask.id!,
-      updatedTask.toMap(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
         isEdit: true,
-        onDelete: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Warning(
-                title: 'Delete task?',
-                descrisption: 'This task will be permanently deleted.',
-                agree: 'Delete',
-                onCancel: () {
-                  Navigator.pop(context);
-                },
-                onAgree: () async {
-                  Navigator.pop(context);
-                  if (widget.task.id == null) return;
-                  final result = await DatabaseHelper.instance.deleteTask(
-                    widget.task.id!,
-                  );
-
-                  if (!context.mounted) return;
-                  if (result > 0) {
-                    Navigator.pop(context, true);
-                  }
-                },
-              );
-            },
-          );
+        onDelete: () async {
+          final shouldDelete = await showDeleteDialog(context);
+          if (!shouldDelete) return;
+          await deleteTask(widget.task);
+          if (!mounted) return;
+          Navigator.pop(context, true);
         },
       ),
       body: Stack(
@@ -165,14 +126,27 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               child: SaveTaskButton(
                 onPressed: () async {
                   if (titleController.text.trim().isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Title không được để trống'),
-                      ),
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return BlankWarning(
+                          title: 'Invalid title',
+                          descrisption: 'Title không được để trống',
+                        );
+                      },
                     );
                     return;
                   }
-                  await updateTask();
+                  final updatedTask = Task(
+                    id: widget.task.id,
+                    title: titleController.text.trim(),
+                    color: selectedColor,
+                    dueAt: selectedTime,
+                    place: placeController.text.trim(),
+                    level: selectedLevel,
+                    status: widget.task.status,
+                  );
+                  await updateTask(updatedTask);
                   if (!mounted) return;
                   Navigator.pop(context, true);
                 },

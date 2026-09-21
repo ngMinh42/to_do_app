@@ -4,19 +4,17 @@ import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
 import 'package:to_do_app/models/task.dart';
 import 'package:to_do_app/widgets/task_card/task_tag.dart';
-
 import '../../common/app_text_style.dart';
-import '../../data/database_helper.dart';
 import '../../presentations/edit_task_screen.dart';
+import '../../utils/dialog_utils.dart';
 import '../../utils/task_status.dart';
-import '../warning/warning.dart';
+import '../../utils/task_utils.dart';
 import 'custom_finish_box.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
   final Future<void> Function() onTaskUpdate;
   const TaskCard({super.key, required this.task, required this.onTaskUpdate});
-
   @override
   State<TaskCard> createState() => _TaskCardState();
 }
@@ -28,41 +26,18 @@ class _TaskCardState extends State<TaskCard> {
       dueAt: widget.task.dueAt,
       status: widget.task.status,
     );
-
     final textColor = overdue ? AppColor.red : AppColor.black;
     return Dismissible(
       key: ValueKey(widget.task.id),
       direction: DismissDirection.endToStart,
-
       confirmDismiss: (direction) async {
-        bool? shouldDelete = await showDialog<bool>(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return Warning(
-              title: 'Delete task?',
-              descrisption: 'This task will be permanently deleted.',
-              agree: 'Delete',
-              onCancel: () {
-                Navigator.pop(context, false);
-              },
-              onAgree: () {
-                Navigator.pop(context, true);
-              },
-            );
-          },
-        );
-
-        if (shouldDelete == true) {
-          if (widget.task.id != null) {
-            await DatabaseHelper.instance.deleteTask(widget.task.id!);
-            await widget.onTaskUpdate();
-          }
+        final shouldDelete = await showDeleteDialog(context);
+        if (shouldDelete) {
+          await deleteTask(widget.task);
+          await widget.onTaskUpdate();
         }
-
-        return shouldDelete ?? false;
+        return shouldDelete;
       },
-
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
@@ -72,7 +47,6 @@ class _TaskCardState extends State<TaskCard> {
         ),
         child: const Icon(Icons.delete_outline, color: Colors.white, size: 30),
       ),
-
       child: Container(
         decoration: BoxDecoration(
           color: widget.task.color,
@@ -89,9 +63,11 @@ class _TaskCardState extends State<TaskCard> {
                 children: [
                   Row(
                     children: [
-                      TaskTag(content: widget.task.level),
+                      Flexible(child: TaskTag(content: widget.task.level)),
                       SizedBox(width: 9),
-                      TaskTag(content: widget.task.place ?? ''),
+                      Flexible(
+                        child: TaskTag(content: widget.task.place ?? ''),
+                      ),
                     ],
                   ),
                   SizedBox(height: 14),
@@ -156,7 +132,6 @@ class _TaskCardState extends State<TaskCard> {
                 ],
               ),
             ),
-
             if (widget.task.status != 1)
               Positioned(
                 top: -10,
@@ -187,7 +162,6 @@ class _TaskCardState extends State<TaskCard> {
                   ],
                 ),
               ),
-
             if (widget.task.status != 1)
               Positioned(
                 right: 0,
@@ -196,12 +170,8 @@ class _TaskCardState extends State<TaskCard> {
                   value: widget.task.status == 1,
                   onChanged: (value) async {
                     if (value) {
-                      await DatabaseHelper.instance.updateTask(
-                        widget.task.id!,
-                        {'status': 1},
-                      );
-
-                      widget.onTaskUpdate?.call();
+                      await completeTask(widget.task);
+                      await widget.onTaskUpdate();
                     }
                   },
                 ),

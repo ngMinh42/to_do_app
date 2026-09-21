@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../common/app_assets.dart';
 import '../../common/app_color.dart';
 
@@ -65,6 +64,7 @@ class _SearchBarState extends State<CustomSearchBar> {
               ),
             ),
           )
+        // title và icon search
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

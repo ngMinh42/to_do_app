@@ -35,62 +35,69 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double mediaBottom = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(),
       body: Stack(
         children: [
-          Container(
-            color: AppColor.white,
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // ô title
-                Text('Task Name', style: AppTextStyle.textFieldName()),
-                CustomTextField(
-                  controller: titleController,
-                  style: AppTextStyle.taskTitle(),
+          Positioned.fill(
+            child: Container(
+              color: AppColor.white,
+              padding: EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: 100),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ô title
+                    Text('Task Name', style: AppTextStyle.textFieldName()),
+                    CustomTextField(
+                      controller: titleController,
+                      style: AppTextStyle.taskTitle(),
+                    ),
+                    SizedBox(height: 22),
+                    // ô color
+                    Text('Color', style: AppTextStyle.textFieldName()),
+                    ColorField(
+                      onChanged: (color) {
+                        selectedColor = color;
+                      },
+                    ),
+                    SizedBox(height: 22),
+                    // ô time
+                    Text('Due Time', style: AppTextStyle.textFieldName()),
+                    DueTimeField(
+                      controller: timeController,
+                      suffixIcon: Image.asset(AppAssets.time),
+                      onChanged: (time) {
+                        selectedTime = time;
+                      },
+                    ),
+                    SizedBox(height: 22),
+                    //ô place
+                    Text('Place', style: AppTextStyle.textFieldName()),
+                    CustomTextField(
+                      controller: placeController,
+                      suffixIcon: Image.asset(AppAssets.place),
+                    ),
+                    SizedBox(height: 22),
+                    Text('Level', style: AppTextStyle.textFieldName()),
+                    SizedBox(height: 16),
+                    // ô level
+                    LevelField(
+                      onChanged: (level) {
+                        selectedLevel = level;
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 22),
-                // ô color
-                Text('Color', style: AppTextStyle.textFieldName()),
-                ColorField(
-                  onChanged: (color) {
-                    selectedColor = color;
-                  },
-                ),
-                SizedBox(height: 22),
-                // ô time
-                Text('Due Time', style: AppTextStyle.textFieldName()),
-                DueTimeField(
-                  controller: timeController,
-                  suffixIcon: Image.asset(AppAssets.time),
-                  onChanged: (time) {
-                    selectedTime = time;
-                  },
-                ),
-                SizedBox(height: 22),
-                //ô place
-                Text('Place', style: AppTextStyle.textFieldName()),
-                CustomTextField(
-                  controller: placeController,
-                  suffixIcon: Image.asset(AppAssets.place),
-                ),
-                SizedBox(height: 22),
-                Text('Level', style: AppTextStyle.textFieldName()),
-                SizedBox(height: 16),
-                // ô level
-                LevelField(
-                  onChanged: (level) {
-                    selectedLevel = level;
-                  },
-                ),
-              ],
+              ),
             ),
           ),
           // nút save task
           Positioned(
-            bottom: 34,
+            bottom: mediaBottom + 34,
             left: 20,
             right: 24,
             child: Center(

@@ -17,12 +17,17 @@ class ColorCircle extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 17,
-        height: 17,
+        padding: EdgeInsets.all(3),
+        width: 29,
+        height: 29,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: color,
           border: isFocused ? Border.all(color: AppColor.gray, width: 1) : null,
+        ),
+        child: Container(
+          width: 23,
+          height: 23,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
       ),
     );

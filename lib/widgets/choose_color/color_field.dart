@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:to_do_app/common/app_assets.dart';
 import 'package:to_do_app/common/app_color.dart';
 import 'package:to_do_app/widgets/choose_color/color_circle.dart';
 
@@ -10,7 +12,7 @@ class ColorField extends StatefulWidget {
     this.onChanged,
     this.initialColor = AppColor.yellow,
   });
-  
+
   @override
   State<ColorField> createState() => _ColorFieldState();
 }
@@ -43,21 +45,27 @@ class _ColorFieldState extends State<ColorField> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: colors.map((color) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: ColorCircle(
-              color: color,
-              isFocused: selectedColor == color,
-              onTap: () {
-                setState(() {
-                  selectedColor = color;
-                });
-                widget.onChanged?.call(color);
-              },
-            ),
-          );
-        }).toList(),
+        children: [
+          ...colors.map((color) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: ColorCircle(
+                color: color,
+                isFocused: selectedColor == color,
+                onTap: () {
+                  setState(() {
+                    selectedColor = color;
+                  });
+                  widget.onChanged?.call(color);
+                },
+              ),
+            );
+          }).toList(),
+          IconButton(
+            onPressed: null,
+            icon: SvgPicture.asset(AppAssets.moreColor, width: 23, height: 23),
+          ),
+        ],
       ),
     );
   }

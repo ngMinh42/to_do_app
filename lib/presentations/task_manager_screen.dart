@@ -6,14 +6,12 @@ import 'package:to_do_app/widgets/buttons/add_task_button.dart';
 import 'package:to_do_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:to_do_app/widgets/text_field/custom_search_bar.dart';
 import 'package:to_do_app/widgets/app_bar/home_app_bar.dart';
-import 'package:to_do_app/widgets/profile_card.dart';
 import 'package:to_do_app/widgets/chip_tab_level/tab_field.dart';
 
 import '../data/database_helper.dart';
 import '../models/task.dart';
 import '../utils/search_utils.dart';
 import '../utils/task_status.dart';
-import '../utils/task_utils.dart';
 import '../widgets/task_card/task_card.dart';
 
 class TaskManagerScreen extends StatefulWidget {
@@ -84,12 +82,16 @@ class _TaskManagerState extends State<TaskManagerScreen> {
                     });
                   },
                 ),
+                SizedBox(height: 25),
                 Expanded(
-                  child: ListView.builder(
+                  child: ListView.separated(
                     itemCount: statusFilteredTasks.length,
                     itemBuilder: (context, index) {
                       final task = statusFilteredTasks[index];
-                      return TaskCard(task: task);
+                      return TaskCard(task: task, onTaskUpdate: loadTasks);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 23);
                     },
                   ),
                 ),

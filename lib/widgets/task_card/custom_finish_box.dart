@@ -1,23 +1,45 @@
 import 'package:flutter/material.dart';
 
+import '../warning/warning.dart';
 import '/common/app_color.dart';
 
-class CustomChosingBox extends StatelessWidget {
+class CustomFinishBox extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
   final double size;
-  const CustomChosingBox({
+  const CustomFinishBox({
     super.key,
     required this.value,
     required this.onChanged,
     this.size = 23,
   });
+  void _showCompleteWarning(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Warning(
+          title: 'Complete task?',
+          descrisption: 'Are you sure you want to complete this task?',
+          agree: 'Complete',
+          onCancel: () {
+            Navigator.pop(context);
+          },
+          onAgree: () {
+            Navigator.pop(context);
+            onChanged(true);
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onChanged(!value);
+        if (!value) {
+          _showCompleteWarning(context);
+        }
       },
       borderRadius: BorderRadius.circular(90),
       child: Container(
@@ -28,16 +50,6 @@ class CustomChosingBox extends StatelessWidget {
           border: Border.all(color: AppColor.black, width: 2),
           borderRadius: BorderRadius.circular(90),
         ),
-        child: value
-            ? Container(
-                width: size - 2,
-                height: size - 2,
-                decoration: BoxDecoration(
-                  color: value ? AppColor.gray : Colors.transparent,
-                  borderRadius: BorderRadius.circular(90),
-                ),
-              )
-            : null,
       ),
     );
   }

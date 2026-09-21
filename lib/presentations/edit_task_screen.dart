@@ -12,6 +12,7 @@ import 'package:to_do_app/models/task.dart';
 
 import '../utils/task_utils.dart';
 import '../widgets/buttons/save_task_button.dart';
+import '../widgets/warning/warning.dart';
 
 class EditTaskScreen extends StatefulWidget {
   final Task task;
@@ -77,7 +78,37 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        isEdit: true,
+        onDelete: () {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Warning(
+                title: 'Delete task?',
+                descrisption: 'This task will be permanently deleted.',
+                agree: 'Delete',
+                onCancel: () {
+                  Navigator.pop(context);
+                },
+                onAgree: () async {
+                  Navigator.pop(context);
+                  if (widget.task.id == null) return;
+                  final result = await DatabaseHelper.instance.deleteTask(
+                    widget.task.id!,
+                  );
+
+                  if (!context.mounted) return;
+                  if (result > 0) {
+                    Navigator.pop(context, true);
+                  }
+                },
+              );
+            },
+          );
+        },
+      ),
       body: Stack(
         children: [
           Container(

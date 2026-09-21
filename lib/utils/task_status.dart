@@ -26,3 +26,13 @@ TaskStatus getTaskStatus({required DateTime? dueAt, required double status}) {
   // Ngày sau hôm nay
   return TaskStatus.upcoming;
 }
+
+bool isOverdue({required DateTime? dueAt, required double status}) {
+  if (status == 1 || dueAt == null) {
+    return false;
+  }
+
+  final now = DateTime.now();
+
+  return dueAt.isBefore(now);
+}

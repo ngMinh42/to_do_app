@@ -54,9 +54,12 @@ class _SearchBarState extends State<CustomSearchBar> {
                 borderSide: BorderSide(color: AppColor.white, width: 1),
               ),
               suffixIcon: IconButton(
-                onPressed: null,
+                onPressed: () {
+                  controller.clear();
+                  widget.onSearch?.call('');
+                },
                 icon: SvgPicture.asset(
-                  AppAssets.searchSvg,
+                  AppAssets.deleteText,
                   width: 20,
                   height: 20,
                 ),

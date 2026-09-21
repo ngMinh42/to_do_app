@@ -22,20 +22,17 @@ class TaskManagerScreen extends StatefulWidget {
 
 class _TaskManagerState extends State<TaskManagerScreen> {
   List<Task> tasks = [];
-  List<Task> filteredTasks = [];
   TaskStatus selectedStatus = TaskStatus.today;
 
-  List<Task> get statusFilteredTasks {
-    return tasks.where((task) {
+  String searchKeyword = '';
+
+  List<Task> get filteredTasks {
+    final searchedTasks = searchTasks(tasks: tasks, keyword: searchKeyword);
+
+    return searchedTasks.where((task) {
       return getTaskStatus(dueAt: task.dueAt, status: task.status) ==
           selectedStatus;
     }).toList();
-  }
-
-  void addTask(Task task) {
-    setState(() {
-      tasks.add(task);
-    });
   }
 
   Future<void> loadTasks() async {
@@ -66,10 +63,7 @@ class _TaskManagerState extends State<TaskManagerScreen> {
                 CustomSearchBar(
                   onSearch: (keyword) {
                     setState(() {
-                      filteredTasks = searchTasks(
-                        tasks: tasks,
-                        keyword: keyword,
-                      );
+                      searchKeyword = keyword;
                     });
                   },
                 ),
@@ -85,9 +79,9 @@ class _TaskManagerState extends State<TaskManagerScreen> {
                 SizedBox(height: 25),
                 Expanded(
                   child: ListView.separated(
-                    itemCount: statusFilteredTasks.length,
+                    itemCount: filteredTasks.length,
                     itemBuilder: (context, index) {
-                      final task = statusFilteredTasks[index];
+                      final task = filteredTasks[index];
                       return TaskCard(task: task, onTaskUpdate: loadTasks);
                     },
                     separatorBuilder: (context, index) {
@@ -98,24 +92,22 @@ class _TaskManagerState extends State<TaskManagerScreen> {
               ],
             ),
           ),
-          Container(
-            child: Positioned(
-              bottom: 34,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: AddTaskButton(
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CreateTaskScreen(),
-                      ),
-                    );
+          Positioned(
+            bottom: 34,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: AddTaskButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CreateTaskScreen(),
+                    ),
+                  );
 
-                    await loadTasks();
-                  },
-                ),
+                  await loadTasks();
+                },
               ),
             ),
           ),

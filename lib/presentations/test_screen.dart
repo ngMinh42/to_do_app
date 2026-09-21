@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/widgets/app_bar/home_app_bar.dart';
 import 'package:to_do_app/widgets/task_card/task_card.dart';
 import 'package:to_do_app/widgets/warning/warning.dart';
 
 import '../common/app_color.dart';
 import '../models/task.dart';
 import '../widgets/app_bar/custom_app_bar.dart';
-import '../widgets/task_card/custom_chosing_box.dart';
+import '../widgets/task_card/custom_finish_box.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -19,7 +20,7 @@ class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: HomeAppBar(),
       body: Stack(
         children: [
           Container(

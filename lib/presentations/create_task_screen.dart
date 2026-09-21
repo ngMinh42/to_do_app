@@ -9,6 +9,7 @@ import 'package:to_do_app/widgets/text_field/custom_text_field.dart';
 import 'package:to_do_app/widgets/text_field/due_time_field.dart';
 import 'package:to_do_app/widgets/chip_tab_level/level_field.dart';
 import 'package:to_do_app/models/task.dart';
+import 'package:to_do_app/widgets/warning/blank_warning.dart';
 
 import '../utils/task_utils.dart';
 import '../widgets/buttons/save_task_button.dart';
@@ -26,10 +27,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Color selectedColor = AppColor.yellow;
   String selectedLevel = 'Urgent';
   DateTime? selectedTime;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -97,10 +94,14 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               child: SaveTaskButton(
                 onPressed: () async {
                   if (titleController.text.trim().isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Title không được để trống'),
-                      ),
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return BlankWarning(
+                          title: 'Invalid title',
+                          descrisption: 'Title không được để trống',
+                        );
+                      },
                     );
                     return;
                   }

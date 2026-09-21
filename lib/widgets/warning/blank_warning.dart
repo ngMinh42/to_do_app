@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:to_do_app/common/app_color.dart';
-import 'package:to_do_app/widgets/warning/custom_button.dart';
 
-class Warning extends StatelessWidget {
-  final VoidCallback? onCancel;
-  final VoidCallback? onAgree;
+class BlankWarning extends StatelessWidget {
   final String title;
   final String? descrisption;
-  final String agree;
-  const Warning({
-    super.key,
-    required this.title,
-    this.descrisption,
-    required this.agree,
-    this.onAgree,
-    this.onCancel,
-  });
+  const BlankWarning({super.key, required this.title, this.descrisption});
   @override
   Widget build(BuildContext content) {
     return Align(
@@ -59,23 +47,6 @@ class Warning extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(text: 'Cancel', onTap: onCancel),
-                  ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: CustomButton(
-                      text: agree,
-                      textColor: AppColor.red,
-                      borderColor: AppColor.red,
-                      onTap: onAgree,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),

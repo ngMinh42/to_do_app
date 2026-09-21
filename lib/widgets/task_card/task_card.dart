@@ -27,6 +27,7 @@ class _TaskCardState extends State<TaskCard> {
       status: widget.task.status,
     );
     final textColor = overdue ? AppColor.red : AppColor.black;
+    // vuốt để xóa
     return Dismissible(
       key: ValueKey(widget.task.id),
       direction: DismissDirection.endToStart,
@@ -38,6 +39,7 @@ class _TaskCardState extends State<TaskCard> {
         }
         return shouldDelete;
       },
+      // nút xóa
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
@@ -47,6 +49,7 @@ class _TaskCardState extends State<TaskCard> {
         ),
         child: const Icon(Icons.delete_outline, color: Colors.white, size: 30),
       ),
+      // task card
       child: Container(
         decoration: BoxDecoration(
           color: widget.task.color,
@@ -63,6 +66,7 @@ class _TaskCardState extends State<TaskCard> {
                 children: [
                   Row(
                     children: [
+                      // 2 tag level và place
                       Flexible(child: TaskTag(content: widget.task.level)),
                       SizedBox(width: 9),
                       Flexible(
@@ -71,6 +75,7 @@ class _TaskCardState extends State<TaskCard> {
                     ],
                   ),
                   SizedBox(height: 14),
+                  // title
                   Text(
                     widget.task.title,
                     maxLines: 1,
@@ -83,6 +88,7 @@ class _TaskCardState extends State<TaskCard> {
                     ),
                   ),
                   if (widget.task.status != 1) SizedBox(height: 14),
+                  // ngày
                   if (widget.task.status != 1)
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -107,6 +113,7 @@ class _TaskCardState extends State<TaskCard> {
                       ],
                     ),
                   if (widget.task.status != 1) SizedBox(height: 14),
+                  // giờ
                   if (widget.task.status != 1)
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -132,6 +139,7 @@ class _TaskCardState extends State<TaskCard> {
                 ],
               ),
             ),
+            // nút edit
             if (widget.task.status != 1)
               Positioned(
                 top: -10,
@@ -162,6 +170,7 @@ class _TaskCardState extends State<TaskCard> {
                   ],
                 ),
               ),
+            // nút hoàn thành
             if (widget.task.status != 1)
               Positioned(
                 right: 0,

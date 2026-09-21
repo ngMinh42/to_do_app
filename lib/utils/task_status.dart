@@ -2,12 +2,10 @@ enum TaskStatus {
   today('Today'),
   upcoming('Upcoming'),
   finished('Finished');
-
   final String title;
-
   const TaskStatus(this.title);
 }
-
+// logic lấy trạng thái task để chia tab
 TaskStatus getTaskStatus({required DateTime? dueAt, required double status}) {
   // Đã hoàn thành
   if (status == 1) {
@@ -26,13 +24,11 @@ TaskStatus getTaskStatus({required DateTime? dueAt, required double status}) {
   // Ngày sau hôm nay
   return TaskStatus.upcoming;
 }
-
+// logic trạng thái quá hạn
 bool isOverdue({required DateTime? dueAt, required double status}) {
   if (status == 1 || dueAt == null) {
     return false;
   }
-
   final now = DateTime.now();
-
   return dueAt.isBefore(now);
 }

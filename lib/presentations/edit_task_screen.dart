@@ -62,6 +62,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         isEdit: true,
+        // logic nút delete
         onDelete: () async {
           final shouldDelete = await showDeleteDialog(context);
           if (!shouldDelete) return;
@@ -78,12 +79,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //ô title
                 Text('Task Name', style: AppTextStyle.textFieldName()),
                 CustomTextField(
                   controller: titleController,
                   style: AppTextStyle.taskTitle(),
                 ),
                 SizedBox(height: 22),
+                // ô color
                 Text('Color', style: AppTextStyle.textFieldName()),
                 ColorField(
                   initialColor: selectedColor,
@@ -92,6 +95,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   },
                 ),
                 SizedBox(height: 22),
+                // ô time
                 Text('Due Time', style: AppTextStyle.textFieldName()),
                 DueTimeField(
                   controller: timeController,
@@ -101,6 +105,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   },
                 ),
                 SizedBox(height: 22),
+                // ô time
                 Text('Place', style: AppTextStyle.textFieldName()),
                 CustomTextField(
                   controller: placeController,
@@ -109,6 +114,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 SizedBox(height: 22),
                 Text('Level', style: AppTextStyle.textFieldName()),
                 SizedBox(height: 16),
+                // ô level
                 LevelField(
                   initialLevel: selectedLevel,
                   onChanged: (level) {
@@ -118,6 +124,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               ],
             ),
           ),
+          //nút save task
           Positioned(
             bottom: 34,
             left: 20,

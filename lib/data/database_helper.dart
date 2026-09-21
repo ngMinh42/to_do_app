@@ -36,9 +36,9 @@ class DatabaseHelper {
       )
     ''');
   }
+  // Thêm task
   Future<int> insertTask(Task task) async {
     final db = await database;
-
     return await db.insert('tasks', task.toMap());
   }
   // Lấy tất cả task

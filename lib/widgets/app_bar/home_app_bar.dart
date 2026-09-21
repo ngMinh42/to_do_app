@@ -10,11 +10,14 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColor.white,
+      // nút menu
       leading: IconButton(
         onPressed: null,
         icon: SvgPicture.asset(AppAssets.menuIcon, width: 41, height: 41),
       ),
+      // title
       title: Text('Task Manager'),
+      // nút notification
       actions: [
         IconButton(
           onPressed: null,
@@ -29,5 +32,6 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
+  // chiều cao = 56
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

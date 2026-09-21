@@ -13,7 +13,6 @@ import '../widgets/buttons/save_task_button.dart';
 
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({super.key});
-  
   @override
   State<CreateTaskScreen> createState() => _CreateTaskScreenState();
 }
@@ -46,12 +45,14 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // ô title
                 Text('Task Name', style: AppTextStyle.textFieldName()),
                 CustomTextField(
                   controller: titleController,
                   style: AppTextStyle.taskTitle(),
                 ),
                 SizedBox(height: 22),
+                // ô color
                 Text('Color', style: AppTextStyle.textFieldName()),
                 ColorField(
                   onChanged: (color) {
@@ -59,6 +60,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   },
                 ),
                 SizedBox(height: 22),
+                // ô time
                 Text('Due Time', style: AppTextStyle.textFieldName()),
                 DueTimeField(
                   controller: timeController,
@@ -68,6 +70,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   },
                 ),
                 SizedBox(height: 22),
+                //ô place
                 Text('Place', style: AppTextStyle.textFieldName()),
                 CustomTextField(
                   controller: placeController,
@@ -76,6 +79,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 SizedBox(height: 22),
                 Text('Level', style: AppTextStyle.textFieldName()),
                 SizedBox(height: 16),
+                // ô level
                 LevelField(
                   onChanged: (level) {
                     selectedLevel = level;
@@ -84,6 +88,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               ],
             ),
           ),
+          // nút save task
           Positioned(
             bottom: 34,
             left: 20,

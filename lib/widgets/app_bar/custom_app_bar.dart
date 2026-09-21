@@ -7,6 +7,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isEdit;
   final VoidCallback? onDelete;
   const CustomAppBar({super.key, this.isEdit = false, this.onDelete});
+  // hàm cảnh báo khi bấm back
   Future<void> _showWarning(BuildContext context) async {
     final shouldDiscard = await showDiscardDialog(context);
     if (shouldDiscard && context.mounted) {
@@ -18,13 +19,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColor.white,
+      // nút back
       leading: IconButton(
         onPressed: () {
           _showWarning(context);
         },
         icon: Image.asset(AppAssets.backIcon, width: 33, height: 33),
       ),
+      // title
       title: Text(isEdit ? 'Edit Task' : 'Create Task'),
+      // nút delete
       actions: [
         if (isEdit)
           IconButton(
@@ -36,5 +40,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
+  // chiều cao = 56
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

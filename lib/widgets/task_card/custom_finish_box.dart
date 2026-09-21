@@ -12,7 +12,7 @@ class CustomFinishBox extends StatelessWidget {
     required this.onChanged,
     this.size = 23,
   });
-  
+  // cảnh báo khi bấm hoàn thành
   void _showCompleteWarning(BuildContext context) {
     showDialog(
       context: context,

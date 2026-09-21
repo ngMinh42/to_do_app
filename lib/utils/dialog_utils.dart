@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/warning/warning.dart';
 
+// cảnh báo xóa task
 Future<bool> showDeleteDialog(BuildContext context) async {
   final result = await showDialog<bool>(
     context: context,
@@ -21,7 +22,7 @@ Future<bool> showDeleteDialog(BuildContext context) async {
   );
   return result ?? false;
 }
-
+// cảnh báo khi bấm hoàn thành
 Future<bool> showCompleteDialog(BuildContext context) async {
   final result = await showDialog<bool>(
     context: context,
@@ -42,7 +43,7 @@ Future<bool> showCompleteDialog(BuildContext context) async {
   );
   return result ?? false;
 }
-
+// cảnh báo khi back về trang manager mà không save task
 Future<bool> showDiscardDialog(BuildContext context) async {
   final result = await showDialog<bool>(
     context: context,

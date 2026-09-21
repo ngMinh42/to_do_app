@@ -20,6 +20,7 @@ class TaskManagerScreen extends StatefulWidget {
 class _TaskManagerState extends State<TaskManagerScreen> {
   List<Task> tasks = [];
   TaskStatus selectedStatus = TaskStatus.today;
+  // lọc task theo status và tìm kiếm
   String searchKeyword = '';
   List<Task> get filteredTasks {
     final searchedTasks = searchTasks(tasks: tasks, keyword: searchKeyword);
@@ -28,7 +29,7 @@ class _TaskManagerState extends State<TaskManagerScreen> {
           selectedStatus;
     }).toList();
   }
-
+  //logic load lại danh sách task ở trang manager
   Future<void> loadTasks() async {
     final data = await DatabaseHelper.instance.getTasks();
     setState(() {
@@ -53,6 +54,7 @@ class _TaskManagerState extends State<TaskManagerScreen> {
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
+                // thanh search bar
                 CustomSearchBar(
                   onSearch: (keyword) {
                     setState(() {
@@ -61,6 +63,7 @@ class _TaskManagerState extends State<TaskManagerScreen> {
                   },
                 ),
                 SizedBox(height: 20),
+                // các ô tab
                 TabField(
                   selectedStatus: selectedStatus,
                   onStatusChanged: (status) {
@@ -73,6 +76,7 @@ class _TaskManagerState extends State<TaskManagerScreen> {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: loadTasks,
+                    // danh sách task
                     child: ListView.separated(
                       itemCount: filteredTasks.length,
                       itemBuilder: (context, index) {
@@ -88,6 +92,7 @@ class _TaskManagerState extends State<TaskManagerScreen> {
               ],
             ),
           ),
+          // nút thêm task
           Positioned(
             bottom: 34,
             left: 0,
